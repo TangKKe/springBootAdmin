@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: SPRING-BOOT-ADMIN
+  boot:
+    admin:
+      context-path: /admin #springBootAdmin 管理主界面根路径 http://127.0.0.1:8004/admin
+  security:  
+    basic:  
+      enabled: true  
+    user:  
+      name: tangke
+      password: tangke123
+server:
+  port: 8004
+eureka:
+  instance:
+    ipAddress: 106.12.85.1
+    instance-id: ${eureka.instance.ipAddress}:${server.port}
+    preferIpAddress: true
+    health-check-url-path: /actuator/health #展示health json数据路径ttp://127.0.0.1:8004/actuator/health
+    metadata-map:
+      user:  
+        name: tangke  # 加密后用户名，原值tangke  
+        password: tangke123 # 加密后用户密码，原值tangke123
+  client:
+    serviceUrl:
+      defaultZone: http://tangke:tangke123@106.12.85.1:8000/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+    
+info:
+  app:
+    name: springBootAdmin
+    description: springBootAdmin
+    version: 1.0.0
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+#jasypt加密的密匙，同一原文，每次生成的密文都是不一致的，但解密后原文一致
+jasypt:
+  encryptor:
+    password: EbfYkitulv73I2p0mXI50JMXoaxZTKJ7 #用来加密敏感属性
